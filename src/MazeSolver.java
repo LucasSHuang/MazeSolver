@@ -30,7 +30,15 @@ public class MazeSolver {
     public ArrayList<MazeCell> getSolution() {
         // TODO: Get the solution from the maze
         // Should be from start to end cells
-        return null;
+        // Creates ArrayList of MazeCells
+        ArrayList<MazeCell> solution = new ArrayList<MazeCell>();
+        // Initialize the variable to track the current cell
+        MazeCell current = maze.getEndCell();
+        while (current != null) {
+            solution.add(0, current);
+            current = current.getParent();
+        }
+        return solution;
     }
 
     /**
