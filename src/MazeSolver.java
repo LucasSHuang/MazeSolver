@@ -34,6 +34,7 @@ public class MazeSolver {
         ArrayList<MazeCell> solution = new ArrayList<MazeCell>();
         // Initialize the variable to track the current cell
         MazeCell current = maze.getEndCell();
+
         while (current != null) {
             solution.add(0, current);
             current = current.getParent();
