@@ -6,6 +6,7 @@
 // MazeSolver by Lucas Huang
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 public class MazeSolver {
     private Maze maze;
@@ -49,8 +50,38 @@ public class MazeSolver {
     public ArrayList<MazeCell> solveMazeDFS() {
         // TODO: Use DFS to solve the maze
         // Explore the cells in the order: NORTH, EAST, SOUTH, WEST
-        return null;
+        MazeCell current = maze.getStartCell();
+        MazeCell child;
+        Stack<MazeCell> explore = new Stack<MazeCell>();
+        while (current != maze.getEndCell()) {
+            current.setExplored(true);
+            int row = current.getRow();
+            int col = current.getCol();
+            if (maze.isValidCell(row + 1, col)); {
+                child = new MazeCell(row + 1, col);
+                child.setParent(current);
+                explore.push(child);
+            }
+            if (maze.isValidCell(row, col + 1)); {
+                child = new MazeCell(row, col + 1);
+                child.setParent(current);
+                explore.push(child);
+            }
+            if (maze.isValidCell(row - 1, col)); {
+                child = new MazeCell(row - 1, col);
+                child.setParent(current);
+                explore.push(child);
+            }
+            if (maze.isValidCell(row, col - 1)); {
+                child = new MazeCell(row, col - 1);
+                child.setParent(current);
+                explore.push(child);
+            }
+            current = explore.pop();
+        }
+        return getSolution();
     }
+
 
     /**
      * Performs a Breadth-First Search to solve the Maze
