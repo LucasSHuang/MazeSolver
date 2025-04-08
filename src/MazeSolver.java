@@ -35,11 +35,12 @@ public class MazeSolver {
         ArrayList<MazeCell> solution = new ArrayList<MazeCell>();
         // Initialize the variable to track the current cell
         MazeCell current = maze.getEndCell();
-
+        // Makes it so that while you can backtrack you add it to the solution from start to end
         while (current != null) {
             solution.add(0, current);
             current = current.getParent();
         }
+        // Return the ArrayList
         return solution;
     }
 
@@ -54,29 +55,32 @@ public class MazeSolver {
         Stack<MazeCell> explore = new Stack<MazeCell>();
         explore.push(current);
         while (!explore.isEmpty()) {
-            if ()
             current.setExplored(true);
+            if (current == maze.getEndCell()) {
+                return getSolution();
+            }
             int row = current.getRow();
             int col = current.getCol();
-            if (maze.isValidCell(row + 1, col)) {
-                explore.push(setChild(row + 1, col, current));
+            if (maze.isValidCell(row - 1, col)) {
+                explore.push(setChild(row - 1, col, current));
             }
             if (maze.isValidCell(row, col + 1)) {
                 explore.push(setChild(row , col + 1, current));
             }
-            if (maze.isValidCell(row - 1, col)) {
-                explore.push(setChild(row - 1, col, current));
+            if (maze.isValidCell(row + 1, col)) {
+                explore.push(setChild(row + 1, col, current));
             }
             if (maze.isValidCell(row, col - 1)) {
                 explore.push(setChild(row, col - 1, current));
             }
             current = explore.pop();
         }
-        return getSolution();
+        return null;
     }
 
     public MazeCell setChild(int row, int col, MazeCell current) {
         MazeCell child = maze.getCell(row, col);
+        child.setExplored(true);
         child.setParent(current);
         return child;
     }

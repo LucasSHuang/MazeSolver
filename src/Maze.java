@@ -150,7 +150,6 @@ public class Maze {
         if (row < 0 || row >= mazeGrid.length || col < 0 || col >= mazeGrid[0].length) {
             return false;
         }
-
         return !mazeGrid[row][col].isExplored() && !mazeGrid[row][col].isWall();
     }
 }
