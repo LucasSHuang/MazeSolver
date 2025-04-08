@@ -6,6 +6,8 @@
 // MazeSolver by Lucas Huang
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
 
 public class MazeSolver {
@@ -51,11 +53,15 @@ public class MazeSolver {
     public ArrayList<MazeCell> solveMazeDFS() {
         // TODO: Use DFS to solve the maze
         // Explore the cells in the order: NORTH, EAST, SOUTH, WEST
-        MazeCell current = maze.getStartCell();
+        // Creates and initializes stack for DFS
         Stack<MazeCell> explore = new Stack<MazeCell>();
+        // Initializes the variable used to keep track of cell you are on
+        MazeCell current = maze.getStartCell();
+        current.setExplored(true);
         explore.push(current);
+        // Makes it so that
         while (!explore.isEmpty()) {
-            current.setExplored(true);
+            current = explore.pop();
             if (current == maze.getEndCell()) {
                 return getSolution();
             }
@@ -73,7 +79,6 @@ public class MazeSolver {
             if (maze.isValidCell(row, col - 1)) {
                 explore.push(setChild(row, col - 1, current));
             }
-            current = explore.pop();
         }
         return null;
     }
@@ -92,6 +97,30 @@ public class MazeSolver {
     public ArrayList<MazeCell> solveMazeBFS() {
         // TODO: Use BFS to solve the maze
         // Explore the cells in the order: NORTH, EAST, SOUTH, WEST
+        MazeCell current = maze.getStartCell();
+        current.setExplored(true);
+        Queue<MazeCell> explore = new LinkedList<MazeCell>();
+        explore.add(current);
+        while (!explore.isEmpty()) {
+            current = explore.remove();
+            if (current == maze.getEndCell()) {
+                return getSolution();
+            }
+            int row = current.getRow();
+            int col = current.getCol();
+            if (maze.isValidCell(row - 1, col)) {
+                explore.add(setChild(row - 1, col, current));
+            }
+            if (maze.isValidCell(row, col + 1)) {
+                explore.add(setChild(row , col + 1, current));
+            }
+            if (maze.isValidCell(row + 1, col)) {
+                explore.add(setChild(row + 1, col, current));
+            }
+            if (maze.isValidCell(row, col - 1)) {
+                explore.add(setChild(row, col - 1, current));
+            }
+        }
         return null;
     }
 
