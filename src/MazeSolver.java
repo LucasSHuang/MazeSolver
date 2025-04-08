@@ -59,32 +59,42 @@ public class MazeSolver {
         MazeCell current = maze.getStartCell();
         current.setExplored(true);
         explore.push(current);
-        // Makes it so that
+        // Makes it so that the loop will continue until it runs out of possible areas to explore
         while (!explore.isEmpty()) {
+            // Sets the current cell to the one on top of the stack
             current = explore.pop();
+            // If reached the end returns the solution
             if (current == maze.getEndCell()) {
                 return getSolution();
             }
+            // Creates variable for row and col values
             int row = current.getRow();
             int col = current.getCol();
+            // Checks to see if you can explore north and adds to stack
             if (maze.isValidCell(row - 1, col)) {
                 explore.push(setChild(row - 1, col, current));
             }
+            // East
             if (maze.isValidCell(row, col + 1)) {
                 explore.push(setChild(row , col + 1, current));
             }
+            // South
             if (maze.isValidCell(row + 1, col)) {
                 explore.push(setChild(row + 1, col, current));
             }
+            // West
             if (maze.isValidCell(row, col - 1)) {
                 explore.push(setChild(row, col - 1, current));
             }
         }
+        // If no solution returns null;
         return null;
     }
 
+    // Sets up all the children of that cell
     public MazeCell setChild(int row, int col, MazeCell current) {
         MazeCell child = maze.getCell(row, col);
+        // Makes them already explored and sets the parent to the correct one
         child.setExplored(true);
         child.setParent(current);
         return child;
@@ -97,10 +107,13 @@ public class MazeSolver {
     public ArrayList<MazeCell> solveMazeBFS() {
         // TODO: Use BFS to solve the maze
         // Explore the cells in the order: NORTH, EAST, SOUTH, WEST
+        // Creates and initializes queue for BFS
+        Queue<MazeCell> explore = new LinkedList<MazeCell>();
+        // Initialize variable to keep track of current cell
         MazeCell current = maze.getStartCell();
         current.setExplored(true);
-        Queue<MazeCell> explore = new LinkedList<MazeCell>();
         explore.add(current);
+        // Same as DFS except with a queue instead of stack
         while (!explore.isEmpty()) {
             current = explore.remove();
             if (current == maze.getEndCell()) {
