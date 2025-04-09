@@ -91,7 +91,7 @@ public class MazeSolver {
         return null;
     }
 
-    // Sets up all the children of that cell
+    // Sets up the child of the current cell
     public MazeCell setChild(int row, int col, MazeCell current) {
         MazeCell child = maze.getCell(row, col);
         // Makes them already explored and sets the parent to the correct one
