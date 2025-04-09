@@ -147,9 +147,11 @@ public class Maze {
      */
     public boolean isValidCell(int row, int col) {
         // TODO: Complete this function
+        // Checks to make sure cell is in boundary
         if (row < 0 || row >= mazeGrid.length || col < 0 || col >= mazeGrid[0].length) {
             return false;
         }
+        // Checks to see if it is already explored or a wall
         return !mazeGrid[row][col].isExplored() && !mazeGrid[row][col].isWall();
     }
 }
